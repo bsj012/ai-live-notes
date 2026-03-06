@@ -1,0 +1,10 @@
+---
+description: 이 프로젝트의 Python 실행 환경은 conda 'aln' 환경
+alwaysApply: true
+---
+
+# Conda 환경
+
+- 터미널에서 Python 관련 명령 실행 시 반드시 `conda run -n aln` 접두사를 사용할 것
+- 예: `conda run -n aln python script.py`, `conda run -n aln pip install package`
+- Python 버전: 3.10 (aln 환경)
