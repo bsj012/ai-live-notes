@@ -1,0 +1,29 @@
+audio:
+  sample_rate: 16000
+  channels: 1
+  bit_depth: 16
+  chunk_size: 1024
+
+asr:
+  engine: funasr          # funasr / zipformer / sensevoice
+  language: ko            # ko / en / ja / zh
+  device: mps             # mps / cpu
+  fun_asr_repo_path: null # null이면 models/Fun-ASR 사용
+  vad:
+    model: fsmn-vad       # fsmn-vad 또는 null (null=비활성화, 장음원은 VAD 필수)
+    max_segment_time: 30000
+    speech_to_sil_time_thres: 150  # ms, 음성→침묵 전환 임계값 (fsmn-vad 기본 150)
+    max_end_silence_time: 800      # ms, 발화 끝 침묵 허용 (fsmn-vad 기본 800)
+
+llm:
+  provider: openai        # openai / gemini / claude / ollama
+  model: gpt-4o
+  temperature: 0.3
+
+output:
+  transcripts_dir: output/transcripts
+  notes_dir: output/notes
+  recordings_dir: output/recordings
+
+logging:
+  level: INFO

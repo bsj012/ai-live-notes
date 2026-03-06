@@ -1,4 +1,4 @@
-# 구현 계획 (Plan.md)
+# 구현 계획 (plan.md)
 
 ## 1. 디렉토리 구조
 
@@ -58,8 +58,8 @@ ai-live-notes/
 ├── tests/                      # 테스트 오디오 및 유닛테스트
 │   ├── audio_samples/          # 테스트 오디오 파일
 │   └── test_asr.py
-├── Requirement.md
-├── Plan.md
+├── spec.md
+├── plan.md
 ├── README.md
 ├── requirements.txt
 ├── .env.example
@@ -93,7 +93,7 @@ ai-live-notes/
 - `funasr.AutoModel`로 `FunAudioLLM/Fun-ASR-MLT-Nano-2512` 로드
 - `device="mps"` (Apple Silicon) 또는 `device="cpu"` 설정
 - VAD(`fsmn-vad`) + ASR 조합으로 pseudo-streaming 구현
-- 언어 파라미터 설정 (한국어/영어/일본어)
+- 언어 파라미터 설정 (한국어/영어/일본어/중국어)
 - 핫워드 지원
 
 ### 2.5 `src/asr/streaming/zipformer_engine.py` — Streaming Zipformer (대안)
@@ -183,11 +183,14 @@ audio:
 
 asr:
   engine: funasr          # funasr / zipformer / sensevoice
-  language: ko            # ko / en / ja
+  language: ko            # ko / en / ja / zh
   device: mps             # mps / cpu
+  fun_asr_repo_path: null # null이면 models/Fun-ASR 사용
   vad:
-    model: fsmn-vad
+    model: fsmn-vad       # fsmn-vad 또는 null (null=비활성화, 장음원은 VAD 필수)
     max_segment_time: 30000
+    speech_to_sil_time_thres: 150  # ms, 음성→침묵 전환 임계값 (fsmn-vad 기본 150)
+    max_end_silence_time: 800      # ms, 발화 끝 침묵 허용 (fsmn-vad 기본 800)
 
 llm:
   provider: openai        # openai / gemini / claude / ollama
@@ -253,8 +256,7 @@ openai-whisper      # Whisper large-v3 로컬 베이스라인 (M4.5에서 필요
 
 1. 한국어 전사 테스트 — **CER** 측정 (`src/utils/metrics.py` 활용)
 2. 영어 전사 테스트 — WER 측정
-3. 일본어 전사 테스트 — WER 측정
-4. (옵션) Streaming Zipformer, SenseVoice와 비교 테스트
+3. (옵션) Streaming Zipformer, SenseVoice와 비교 테스트
 
 ### M4: 고품질 후처리 ASR
 
@@ -402,15 +404,13 @@ model = AutoModel(
 res = model.generate(input=["test_ko.wav"], cache={}, language="韩文")
 # 영어 테스트
 res = model.generate(input=["test_en.wav"], cache={}, language="英文")
-# 일본어 테스트
-res = model.generate(input=["test_ja.wav"], cache={}, language="日文")
 ```
 
 ### 측정 항목
 
 | 항목 | 측정 방법 |
 |---|---|
-| 전사 정확도 (한국어 CER / 영어·일본어 WER) | 레퍼런스 전사와 비교 |
+| 전사 정확도 (한국어 CER / 영어 WER) | 레퍼런스 전사와 비교 |
 | 처리 속도 (RTF) | 처리 시간 / 오디오 길이 |
 | 메모리 사용량 | `mps` vs `cpu` 비교 |
 | 지연시간 | 마이크 입력 → 전사 출력 시간 |

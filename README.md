@@ -2,7 +2,7 @@
 
 맥북 환경에서 실시간 음성 전사(ASR) + AI 강의 노트 자동 생성 애플리케이션.
 
-FunASR-MLT-Nano로 실시간 전사(KO/EN/JA 31개 언어)하고, VibeVoice-ASR로 고품질 후처리(화자 분리 + 타임스탬프)한 뒤, LLM으로 구조화된 노트를 생성합니다.
+FunASR-MLT-Nano로 실시간 전사(KO/EN/JA/ZH 31개 언어)하고, VibeVoice-ASR로 고품질 후처리(화자 분리 + 타임스탬프)한 뒤, LLM으로 구조화된 노트를 생성합니다.
 
 ## 환경 설정
 
@@ -31,7 +31,7 @@ cp .env.example .env
 ```
 
 `config.yaml`에서 ASR 엔진, 언어, 오디오 파라미터, LLM 프로바이더 등 전역 설정을 관리합니다.
-자세한 설정 항목은 [`Plan.md`](Plan.md) 섹션 2.16을 참조하세요.
+자세한 설정 항목은 [`plan.md`](plan.md) 섹션 2.16을 참조하세요.
 
 지원하는 LLM 프로바이더 (API 키를 입력한 프로바이더만 활성화):
 
@@ -71,7 +71,7 @@ model = AutoModel(
 )
 ```
 
-- 31개 언어 지원 (한국어, 영어, 일본어 포함)
+- 31개 언어 지원 (한국어, 영어, 일본어, 중국어 포함)
 - 800M 파라미터, `device="mps"` 로 맥북에서 CUDA 없이 구동
 
 #### Streaming Zipformer (실시간 전사 — 대안)
@@ -111,8 +111,8 @@ conda activate aln
 
 ## 문서
 
-- [`Requirement.md`](Requirement.md) — 프로젝트 요구사항 정의서
-- [`Plan.md`](Plan.md) — 구현 계획
+- [`spec.md`](spec.md) — 프로젝트 요구사항 정의서
+- [`plan.md`](plan.md) — 구현 계획
 
 ## 라이선스
 

@@ -1,4 +1,4 @@
-# 프로젝트 요구사항 정의서 (Requirement.md)
+# 프로젝트 요구사항 정의서 (spec.md)
 
 ## 1. 프로젝트 목적
 
@@ -15,8 +15,8 @@
 
 ### 2.2 다국어 지원
 
-- 필수: 한국어(Korean), 영어(English), 일본어(Japanese)
-- Phase 1에서 3개 언어 모두 PoC 검증 수행
+- 필수: 한국어(Korean), 영어(English), 일본어(Japanese), 중국어(Chinese)
+- Phase 1에서 4개 언어(KO/EN/JA/ZH) PoC 검증 수행
 - FunASR-MLT-Nano는 단일 모델로 31개 언어를 지원하므로 언어 전환이 간편
 
 ### 2.3 고품질 후처리 (Post-processing)
@@ -41,7 +41,7 @@
 
 | 용도 | 엔진 | 모델 | 비고 |
 |---|---|---|---|
-| **실시간 ASR (메인)** | `funasr` | FunASR-MLT-Nano-2512 (800M) | 31개 언어, KO/EN/JA 지원, VAD+pseudo-streaming |
+| **실시간 ASR (메인)** | `funasr` | FunASR-MLT-Nano-2512 (800M) | 31개 언어, KO/EN/JA/ZH 지원, VAD+pseudo-streaming |
 | **실시간 ASR (대안)** | `sherpa-onnx` | Streaming Zipformer | KO/EN만 스트리밍 가능 (JA 모델 없음) |
 | **실시간 ASR (대안)** | `sherpa-onnx` | SenseVoice | KO/EN/JA/ZH/Cantonese 단일 모델, offline |
 | **고품질 후처리 ASR** | Transformers / vLLM | VibeVoice-ASR (9B) | 배치 전용, 화자 분리 + 타임스탬프, 51개 언어 |
@@ -49,7 +49,7 @@
 #### 모델 선정 근거
 
 - **FunASR-MLT-Nano-2512 (메인 후보)**: Tongyi Lab의 end-to-end ASR 대형 모델.
-  800M 파라미터, 수십만 시간 학습 데이터, 31개 언어 지원(KO/EN/JA 포함).
+  800M 파라미터, 수십만 시간 학습 데이터, 31개 언어 지원(KO/EN/JA/ZH 포함).
   `device="mps"` 로 Apple Silicon에서 CUDA 없이 구동 가능.
   VAD(`fsmn-vad`) 조합으로 pseudo-streaming 구현.
   핫워드 지원으로 도메인 특화 정확도 향상 가능.
