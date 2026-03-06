@@ -1,0 +1,29 @@
+# ASR Engine (메인: FunASR-MLT-Nano)
+funasr
+
+# ASR Engine (대안: Streaming Zipformer, SenseVoice)
+sherpa-onnx
+
+# ASR Engine (후처리: VibeVoice-ASR — M4에서 필요)
+torch
+transformers
+
+# ASR Baseline (Whisper large-v3 로컬 — M4.5 벤치마크용)
+openai-whisper
+
+# Audio Capture
+pyaudio
+
+# LLM Providers
+openai
+anthropic
+google-generativeai
+
+# Evaluation & Benchmark
+datasets
+huggingface_hub
+jiwer
+
+# Utilities
+python-dotenv
+pyyaml
