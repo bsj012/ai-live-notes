@@ -201,6 +201,7 @@ cython_debug/
 models/
 output/
 tests/audio_samples/
+docs/journal/
 
 # Cursor
 #  Cursor is an AI-powered code editor. `.cursorignore` specifies files/directories to
